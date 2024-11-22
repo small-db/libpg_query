@@ -316,16 +316,5 @@ test/scan: test/scan.c test/scan_tests.c $(ARLIB)
 test/split: test/split.c test/split_tests.c $(ARLIB)
 	$(CC) $(TEST_CFLAGS) -o $@ test/split.c $(ARLIB) $(TEST_LDFLAGS)
 
-prefix = /usr/local
-libdir = $(prefix)/lib
-includedir = $(prefix)/include
-
 install: $(ARLIB) $(SOLIB)
-	$(INSTALL) -d "$(DESTDIR)"$(libdir)
-	$(INSTALL) -m 644 $(ARLIB) "$(DESTDIR)"$(libdir)/$(ARLIB)
-	$(INSTALL) -m 755 $(SOLIB) "$(DESTDIR)"$(libdir)/$(SOLIBVER)
-	$(LN_S) $(SOLIBVER) "$(DESTDIR)"$(libdir)/$(SONAME)
-	$(LN_S) $(SOLIBVER) "$(DESTDIR)"$(libdir)/$(SOLIB)
-	$(INSTALL) -d "$(DESTDIR)"$(includedir)/$(TARGET)
-	$(INSTALL) -m 644 pg_query.h "$(DESTDIR)"$(includedir)/pg_query.h
-	$(INSTALL) -m 644 protobuf/pg_query.proto "$(DESTDIR)"$(includedir)/$(TARGET)/pg_query.proto
+	$(INSTALL) -m 644 $(ARLIB) "$(PREFIX)"/lib/$(ARLIB)
