@@ -318,3 +318,4 @@ test/split: test/split.c test/split_tests.c $(ARLIB)
 
 install: $(ARLIB) $(SOLIB)
 	$(INSTALL) -m 644 $(ARLIB) "$(PREFIX)"/lib/$(ARLIB)
+	$(INSTALL) -m 644 pg_query.h "$(PREFIX)"/include/pg_query.h
