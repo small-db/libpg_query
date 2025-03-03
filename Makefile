@@ -192,8 +192,6 @@ $(SOLIB): $(OBJ_FILES) Makefile
 protobuf/pg_query.pb-c.c protobuf/pg_query.pb-c.h: protobuf/pg_query.proto
 ifneq ($(shell which protoc-gen-c), )
 	protoc --c_out=. protobuf/pg_query.proto
-else
-	@echo 'Warning: protoc-gen-c not found, skipping protocol buffer regeneration'
 endif
 
 src/pg_query_protobuf.c src/pg_query_scan.c: protobuf/pg_query.pb-c.h
@@ -317,5 +315,11 @@ test/split: test/split.c test/split_tests.c $(ARLIB)
 	$(CC) $(TEST_CFLAGS) -o $@ test/split.c $(ARLIB) $(TEST_LDFLAGS)
 
 install: $(ARLIB) $(SOLIB)
-	$(INSTALL) --compare -m 644 $(ARLIB) "$(PREFIX)"/lib/$(ARLIB)
-	$(INSTALL) --compare -m 644 pg_query.h "$(PREFIX)"/include/pg_query.h
+	# --compare
+	# compare  content  of  source and destination files, and if no change to content, ownership, and permissions, do not modify the destination at all
+	# -D
+	# create all leading components of DEST except the last
+	# -m
+	# set permission mode (as in chmod), instead of rwxr-xr-x
+	$(INSTALL) --compare -D -m 644 $(ARLIB) "$(PREFIX)"/lib/$(ARLIB)
+	$(INSTALL) --compare -D -m 644 pg_query.h "$(PREFIX)"/include/pg_query.h
