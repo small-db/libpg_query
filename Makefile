@@ -317,5 +317,5 @@ test/split: test/split.c test/split_tests.c $(ARLIB)
 	$(CC) $(TEST_CFLAGS) -o $@ test/split.c $(ARLIB) $(TEST_LDFLAGS)
 
 install: $(ARLIB) $(SOLIB)
-	$(INSTALL) -m 644 $(ARLIB) "$(PREFIX)"/lib/$(ARLIB)
-	$(INSTALL) -m 644 pg_query.h "$(PREFIX)"/include/pg_query.h
+	$(INSTALL) --compare -m 644 $(ARLIB) "$(PREFIX)"/lib/$(ARLIB)
+	$(INSTALL) --compare -m 644 pg_query.h "$(PREFIX)"/include/pg_query.h
